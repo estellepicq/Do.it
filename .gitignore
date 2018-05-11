@@ -1,0 +1,8 @@
+# compiled output
+/public
+
+# dependencies
+/node_modules
+
+# front node_modules
+/front-src/node_modules
