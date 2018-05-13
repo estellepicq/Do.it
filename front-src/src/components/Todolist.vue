@@ -29,26 +29,31 @@
 </template>
 
 <script>
+
+  var socket = io.connect('http://localhost:4000/');
+
   export default {
     name: 'todolist',
+
     data() {
       return {
-        todolistId: this.$route.params.id, //we get the id specified in the url
+        todolistId: this.$route.params.id, // We get the id specified in the url
         newTodo: {},
         todos: []
       }
     },
+
     methods: {
       addTodo: function(e) {
         this.$http.post('http://localhost:4000/todos/add', {newtodo: this.newTodo.item, todolistId: this.todolistId}, {headers: {'Content-Type': 'application/json'}})
           .then(function(response) {
-            this.todos.push({
+            var addedTodo = {
               item: response.data.data.item,
               done: false,
               _id: response.data.data.id,
               todolistId: this.todolistId
-            });
-            console.log('added');
+            };
+            socket.emit('addTodoServer', addedTodo); //We send the addedTodo to the server via socket.io
           })
           .catch(function(error) {
             console.log(error);
@@ -59,7 +64,7 @@
       updateTodo: function(todo) {
         this.$http.put('http://localhost:4000/todos/update/' + todo._id)
           .then(function(response) {
-            console.log('updated');
+            socket.emit('updateTodoServer', todo); //We send the todo to update to the server via socket.io
           })
           .catch(function(error) {
             console.log(error);
@@ -68,14 +73,14 @@
       deleteTodo: function(todo) {
         this.$http.delete('http://localhost:4000/todos/delete/' + todo._id)
           .then(function(response) {
-            this.todos.splice(this.todos.indexOf(todo), 1);
-            console.log('deleted');
+            socket.emit('deleteTodoServer', todo); //We send the todo to delete to the server via socket.io
           })
           .catch(function(error) {
             console.log(error);
           });
         }
     },
+
     created: function() {
       this.$http.get('http://localhost:4000/todos/all/' + this.todolistId)
         .then(function(response) {
@@ -83,8 +88,41 @@
             this.todos = response.data.data;
           }
         });
+    },
+
+    mounted: function() {
+      /* --addTodoClient-- event
+        We add the new addedTodo into todos table
+        -> as the socket.io event from server is a global emit, all connected clients will see the modification */
+      socket.on('addTodoClient', function(data) {
+        this.todos.push(data);
+      }.bind(this));
+
+      /* --deleteTodoClient-- event
+        We delete the todo from todos table
+        -> as the socket.io event from server is a global emit, all connected clients will see the modification */
+      socket.on('deleteTodoClient', function(data) {
+        for(var i = 0; i < this.todos.length; i++) {
+          if(this.todos[i]._id === data._id) {
+            this.todos.splice(i, 1);
+          }
+        }
+      }.bind(this));
+
+      /* --updateTodoClient-- event
+        We update the todo in todos table
+        -> as the socket.io event from server is a broadcast emit, all other connected clients will see the modification */
+      socket.on('updateTodoClient', function(data) {
+        for(var i = 0; i < this.todos.length; i++) {
+          if(this.todos[i]._id === data._id) {
+            this.todos[i].done = data.done;
+          }
+        }
+      }.bind(this));
     }
+
   }
+
 </script>
 
 <style scoped>

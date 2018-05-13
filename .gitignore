@@ -1,7 +1,4 @@
-# compiled output
-/public
-
-# dependencies
+# back node_modules
 /node_modules
 
 # front node_modules
