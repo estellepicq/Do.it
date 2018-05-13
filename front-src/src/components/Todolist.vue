@@ -30,7 +30,7 @@
 
 <script>
 
-  var socket = io.connect('http://localhost:4000/');
+  var socket = io.connect('http://localhost:4000/'); //Replace by 'http://yourdomain.com:4000' once online
 
   export default {
     name: 'todolist',
@@ -82,23 +82,19 @@
     },
 
     created: function() {
-
-      this.$http.get('/todos/todolistids')
-        .then(function(response) {
-          if(response.data.data.includes(this.todolistId)) {
+      // this.$http.get('/todos/todolistids')
+      //   .then(function(response) {
+      //     if(response.data.data.includes(this.todolistId)) { //to add : OR if we come from create-todolist
             this.$http.get('/todos/all/' + this.todolistId)
               .then(function(response) {
                 if(response.data.success) {
                   this.todos = response.data.data;
                 }
               });
-          } else {
-            this.$router.push('/');
-          }
-        });
-
-
-
+        //   } else {
+        //     this.$router.push('/');
+        //   }
+        // });
     },
 
     mounted: function() {
