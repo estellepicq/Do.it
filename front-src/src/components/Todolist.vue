@@ -45,7 +45,7 @@
 
     methods: {
       addTodo: function(e) {
-        this.$http.post('http://localhost:4000/todos/add', {newtodo: this.newTodo.item, todolistId: this.todolistId}, {headers: {'Content-Type': 'application/json'}})
+        this.$http.post('/todos/add', {newtodo: this.newTodo.item, todolistId: this.todolistId}, {headers: {'Content-Type': 'application/json'}})
           .then(function(response) {
             var addedTodo = {
               item: response.data.data.item,
@@ -62,7 +62,7 @@
         e.preventDefault();
       },
       updateTodo: function(todo) {
-        this.$http.put('http://localhost:4000/todos/update/' + todo._id)
+        this.$http.put('/todos/update/' + todo._id)
           .then(function(response) {
             socket.emit('updateTodoServer', todo); //We send the todo to update to the server via socket.io
           })
@@ -71,7 +71,7 @@
           });
       },
       deleteTodo: function(todo) {
-        this.$http.delete('http://localhost:4000/todos/delete/' + todo._id)
+        this.$http.delete('/todos/delete/' + todo._id)
           .then(function(response) {
             socket.emit('deleteTodoServer', todo); //We send the todo to delete to the server via socket.io
           })
@@ -82,12 +82,23 @@
     },
 
     created: function() {
-      this.$http.get('http://localhost:4000/todos/all/' + this.todolistId)
+
+      this.$http.get('/todos/todolistids')
         .then(function(response) {
-          if(response.data.success) {
-            this.todos = response.data.data;
+          if(response.data.data.includes(this.todolistId)) {
+            this.$http.get('/todos/all/' + this.todolistId)
+              .then(function(response) {
+                if(response.data.success) {
+                  this.todos = response.data.data;
+                }
+              });
+          } else {
+            this.$router.push('/');
           }
         });
+
+
+
     },
 
     mounted: function() {

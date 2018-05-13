@@ -23,6 +23,7 @@ export default new Router({
       path: '/todolist/:id',
       name: 'Todolist',
       component: Todolist
-    }
+    },
+    { path: '*', redirect: '/' }
   ]
 })

@@ -31,7 +31,7 @@
     },
     methods: {
       checkFreeId: function() {
-        this.$http.get('http://localhost:4000/todos/todolistids')
+        this.$http.get('/todos/todolistids')
           .then(function(response) {
             if(response.data.data.includes(this.todolistId)) {
               this.helperMessage = '';
