@@ -8,8 +8,13 @@
       <label for="newTodolistId">Enter a code for your to-do list</label>
       <span class="helper-text" :data-error="helperMessage"></span>
     </div>
-    <div v-if="newTodolistId&&valid">
-      <router-link tag="button" class="waves-effect waves-light btn" :to="{ name: 'Todolist', params: { id: newTodolistId }}">Create todolist</router-link>
+    <div class="row">
+      <div class="left-align col s6">
+        <button class="waves-effect waves-light btn grey lighten-1" v-on:click="$router.go(-1)">Go back</button>
+      </div>
+      <div v-if="newTodolistId&&valid" class="right-align col s6">
+        <router-link tag="button" class="waves-effect waves-light btn" :to="{ name: 'Todolist', params: { id: newTodolistId }}">Create todolist</router-link>
+      </div>
     </div>
   </div>
 </template>

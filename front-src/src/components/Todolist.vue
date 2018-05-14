@@ -1,16 +1,23 @@
 <template>
   <div class="container todolist">
 
-    <h4>To-do list <small>{{todolistId}}</small></h4>
+    <h4>To-do list <small>[{{todolistId}}]</small></h4>
 
     <form v-on:submit="addTodo">
       <div class="input-field">
         <input id="newtodo" type="text" v-model="newTodo.item">
         <label for="newtodo">To do</label>
       </div>
-      <button class="btn waves-effect waves-light" type="submit">Add
-        <i class="material-icons right">add</i>
-      </button>
+      <div class="row">
+        <div class="left-align col s6">
+          <router-link class="waves-effect waves-light btn grey lighten-1" to="/">Go home</router-link>
+        </div>
+        <div class="right-align col s6">
+          <button class="btn waves-effect waves-light" type="submit">Add
+            <i class="material-icons right">add</i>
+          </button>
+        </div>
+      </div>
     </form>
     <br>
     <ul class="collection left-align" v-if="todos.length > 0">
@@ -45,7 +52,8 @@
 
     methods: {
       addTodo: function(e) {
-        this.$http.post('/todos/add', {newtodo: this.newTodo.item, todolistId: this.todolistId}, {headers: {'Content-Type': 'application/json'}})
+        if(this.newTodo.item !== '' && this.newTodo.item !== undefined) {
+          this.$http.post('/todos/add', {newtodo: this.newTodo.item, todolistId: this.todolistId}, {headers: {'Content-Type': 'application/json'}})
           .then(function(response) {
             var addedTodo = {
               item: response.data.data.item,
@@ -58,7 +66,8 @@
           .catch(function(error) {
             console.log(error);
           });
-        this.newTodo.item = '';
+          this.newTodo.item = '';
+        }
         e.preventDefault();
       },
       updateTodo: function(todo) {
