@@ -7,7 +7,7 @@ const ObjectID = require('mongodb').ObjectID;
 router.get('/all/:id', (req, res, next) => {
 
   //Connection to todolistapp database
-  MongoClient.connect("mongodb://localhost/todolistapp", function(err, db) {
+  MongoClient.connect("mongodb://localhost/doit", function(err, db) {
       if (err) {
         res.json({success: false, data: err});
         console.log(err);
@@ -28,8 +28,8 @@ router.get('/all/:id', (req, res, next) => {
 //Select distinct todolist ids
 router.get('/todolistids', (req, res, next) => {
 
-  //Connection to todolistapp database
-  MongoClient.connect("mongodb://localhost/todolistapp", function(err, db) {
+  //Connection to doit database
+  MongoClient.connect("mongodb://localhost/doit", function(err, db) {
       if (err) {
         res.json({success: false, data: err});
         console.log(err);
@@ -49,7 +49,7 @@ router.get('/todolistids', (req, res, next) => {
 
 //Add todo route
 router.post('/add', (req, res, next) => {
-  MongoClient.connect("mongodb://localhost/todolistapp", function(err, db) {
+  MongoClient.connect("mongodb://localhost/doit", function(err, db) {
     if (err) {
       res.json({success: false, data: err});
       console.log(err);
@@ -70,7 +70,7 @@ router.post('/add', (req, res, next) => {
 
 //Update todo route
 router.put('/update/:id', (req, res, next) => {
-  MongoClient.connect("mongodb://localhost/todolistapp", function(err, db) {
+  MongoClient.connect("mongodb://localhost/doit", function(err, db) {
     if (err) {
       res.json({success: false, data: err});
       console.log(err);
@@ -100,7 +100,7 @@ router.put('/update/:id', (req, res, next) => {
 
 //Delete todo route
 router.delete('/delete/:id', (req, res, next) => {
-  MongoClient.connect("mongodb://localhost/todolistapp", function(err, db) {
+  MongoClient.connect("mongodb://localhost/doit", function(err, db) {
     if (err) {
       res.json({success: false, data: err});
       console.log(err);

@@ -11,5 +11,5 @@ This is the version 2 of TodolistApp.
 - Socket.io
 - MaterializeCSS
 
-## Example
-![screenshot](http://www.image-heberg.fr/files/15262389982088962339.jpg)
+## Live Example
+http://doit.estellepicq.com
