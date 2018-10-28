@@ -111,7 +111,9 @@
         We add the new addedTodo into todos table
         -> as the socket.io event from server is a global emit, all connected clients will see the modification */
       socket.on('addTodoClient', function(data) {
-        this.todos.push(data);
+        if (data.todolistId === this.todolistId) {
+          this.todos.push(data);
+        }
       }.bind(this));
 
       /* --deleteTodoClient-- event
