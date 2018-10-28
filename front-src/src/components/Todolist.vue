@@ -1,7 +1,7 @@
 <template>
   <div class="container todolist">
 
-    <h4>To-do list <small>[{{todolistId}}]</small></h4>
+    <h4>To-do list</h4>
 
     <form v-on:submit="addTodo">
       <div class="input-field">

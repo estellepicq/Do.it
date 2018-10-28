@@ -68,6 +68,27 @@ router.post('/add', (req, res, next) => {
   });
 });
 
+//Add many items route
+router.post('/addmany', (req, res, next) => {
+  MongoClient.connect("mongodb://localhost/doit", function(err, db) {
+    if (err) {
+      res.json({success: false, data: err});
+      console.log(err);
+    } else {
+      //We insert the new todos into database
+      db.collection("todolist").insertMany(req.body.items, null, function(err, results) {
+        if (err) {
+          res.json({success: false, data: err});
+          console.log(err);
+        } else {
+          res.json({success: true, data: {items: results.ops, todolistId: results.ops[0].todolistId}});
+          console.log(results.result.n + " items inserted into todolist: " + results.ops[0].todolistId);
+        }
+      });
+    }
+  });
+});
+
 //Update todo route
 router.put('/update/:id', (req, res, next) => {
   MongoClient.connect("mongodb://localhost/doit", function(err, db) {

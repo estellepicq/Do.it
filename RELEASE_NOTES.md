@@ -1,3 +1,7 @@
+Version 1.4.0 (28/10/2018)
+-----------------------------
+* Add a new route: add many todo items
+
 Version 1.3.0 (10/06/2018)
 -----------------------------
 * Change name of database
