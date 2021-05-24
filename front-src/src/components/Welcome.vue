@@ -2,9 +2,9 @@
   <div class="container welcome">
 
     <h4>Welcome on Do.it</h4>
-    </br></br>
+    <br><br>
     <router-link to="/create-todolist" tag="button" class="waves-effect waves-light btn">Create a todolist</router-link>
-    </br></br>
+    <br><br>
     <div>
       <h6>OR</h6>
     </div>

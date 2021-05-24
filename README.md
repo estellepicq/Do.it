@@ -13,3 +13,5 @@ This is the version 2 of TodolistApp.
 
 ## Live Example
 http://doit.estellepicq.com
+
+## Run locally

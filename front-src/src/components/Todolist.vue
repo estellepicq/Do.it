@@ -21,7 +21,7 @@
     </form>
     <br>
     <ul class="collection left-align" v-if="todos.length > 0">
-      <li v-for="todo in todos" class="collection-item">
+      <li v-for="todo in todos" v-bind:key="todo" class="collection-item">
         <label>
           <input type="checkbox" v-model="todo.done" v-on:change="updateTodo(todo)">
           <span :class="{done: todo.done}">
@@ -37,7 +37,8 @@
 
 <script>
 
-  var socket = io.connect('http://localhost:4000/'); //Replace by 'http://yourdomain.com:4000' once online
+  // var socket = io.connect('http://localhost:8083/'); //Replace by 'http://yourdomain.com:8083' once online
+  var socket = io.connect(process.env.SERVER);
 
   export default {
     name: 'todolist',

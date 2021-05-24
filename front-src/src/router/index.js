@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Todolist from '@/components/todolist'
-import Createtodolist from '@/components/createtodolist'
-import Welcome from '@/components/welcome'
+import Todolist from '@/components/Todolist'
+import Createtodolist from '@/components/CreateTodolist'
+import Welcome from '@/components/Welcome'
 
 Vue.use(Router)
 
