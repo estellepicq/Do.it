@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const io = require('socket.io').listen(server);
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 8083;
 
 // CORS Middleware
 app.use(cors());
